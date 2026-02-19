@@ -37,8 +37,11 @@ class BooksController extends Controller
         // return response()->json($books);
 
         $books = Book::where('title', 'like', '%'. $request->title . '%')
-                    ->where('auhtor', 'like', '%'. $request->auhtor . '%')
+                    ->orwhere('auhtor', 'like', '%'. $request->auhtor . '%')
+                    ->orderBy('title', 'asc')
                     ->get();
+
+                  
 
         return response()->json($books);
     }
