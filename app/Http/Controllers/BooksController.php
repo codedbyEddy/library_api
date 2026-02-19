@@ -30,8 +30,16 @@ class BooksController extends Controller
         ]);
     }
 
-    public function listBooks(){
-        $books = Book::all();
+    public function listBooks(Request $request){   
+        // dd($request->all());
+
+        // $books = Book::all();
+        // return response()->json($books);
+
+        $books = Book::where('title', 'like', '%'. $request->title . '%')
+                    ->where('auhtor', 'like', '%'. $request->auhtor . '%')
+                    ->get();
+
         return response()->json($books);
     }
 
