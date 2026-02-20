@@ -28,3 +28,4 @@ Route::get('/books/availability/{id}', [BooksController::class, 'bookAvailabilit
 Route::post('/edit-books/{id}', [BooksController::class, 'editBook']);
 Route::post('/borrowed-books', [BooksController::class, 'viewBorrowed']);
 Route::delete('/delete-books/{id}', [BooksController::class, 'deleteBook']);
+Route::get('/search-books', [BooksController::class, 'search']);
