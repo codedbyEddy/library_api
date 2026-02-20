@@ -13,7 +13,10 @@ class Borrow extends Model
         'borrowed_at',
         'due_date',
         'returned_at',
-        'borrows_id'
+        'borrows_id',
+        'fine',
+        'paid_fine'
+
         
     ];
 

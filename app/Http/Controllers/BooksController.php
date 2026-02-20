@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\Models\Book;
 use App\Models\Borrow;
+use Carbon\Carbon;
 
 use Illuminate\Http\Request;
 
@@ -67,7 +68,9 @@ class BooksController extends Controller
             'user_id' => $request->user_id,
             'book_id' => $request->book_id,
             'borrowed_at'=> now(),
-            'due_date' => $request->due_date
+            'due_date' => $request->due_date,
+            'fine'=> 0,
+            'paid_fine'=>0
         ]);
 
         return response()->json([
@@ -85,9 +88,27 @@ class BooksController extends Controller
 
         $borrow = Borrow::find($request->borrows_id);
 
-        $borrow->update(['returned_at' => now()]);
+        $returnedAt = Carbon::parse(now());
+        // dd($returnedAt);
+        $dueDate = Carbon::parse($borrow->due_date);
+
+        $daysLate = $returnedAt->diffInDays($dueDate);
+        // dd($daysLate);
+        
+        if ($daysLate > 2) {
+            $fine = 25;
+
+            $borrow->update([
+                'fine'=>$fine,
+                'paid_fine'=> 0,
+                'returned_at'=> now()
+            ]);
+        } else {
+            $borrow->update(['returned_at' => now()]);
+        }
 
         $book = Book::where('id', $borrow->book_id)->increment('available_copies');
+
 
 
         return response()->json([
