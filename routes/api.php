@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BooksController;
+use App\Http\Controllers\UsermanagerController;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,4 +29,5 @@ Route::get('/books/availability/{id}', [BooksController::class, 'bookAvailabilit
 Route::post('/edit-books/{id}', [BooksController::class, 'editBook']);
 Route::post('/borrowed-books', [BooksController::class, 'viewBorrowed']);
 Route::delete('/delete-books/{id}', [BooksController::class, 'deleteBook']);
-Route::get('/search-books', [BooksController::class, 'search']);
+
+Route::post('/create-users', [UsermanagerController::class, 'create']);
